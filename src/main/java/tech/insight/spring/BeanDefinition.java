@@ -24,13 +24,13 @@ public class BeanDefinition {
         try {
             this.constructor = type.getConstructor();
             this.postConstructMethod = Arrays.stream(type.getDeclaredMethods())
-                    .filter(m -> m.isAnnotationPresent(PostConstruct.class))
-                    .findFirst()
-                    .orElse(null);
+                .filter(m -> m.isAnnotationPresent(PostConstruct.class))
+                .findFirst()
+                .orElse(null);
             this.autowiredFields =
-                    Arrays.stream(type.getDeclaredFields())
-                            .filter(f -> f.isAnnotationPresent(Autowired.class))
-                            .toList();
+                Arrays.stream(type.getDeclaredFields())
+                    .filter(f -> f.isAnnotationPresent(Autowired.class))
+                    .toList();
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }

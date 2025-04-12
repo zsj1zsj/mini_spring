@@ -34,20 +34,20 @@ public class ApplicationContext {
     private List<BeanPostProcessor> postProcessors = new ArrayList<>();
 
     public void initContext(String packageName) throws Exception {
-        scanPackage(packageName).stream().filter(this::scanCreate).forEach(this::wrapper);
+        scanPackage(packageName).stream().filter(this::canCreate).forEach(this::wrapper);
         initBeanPostProcessor();
         beanDefinitionMap.values().forEach(this::createBean);
     }
 
     private void initBeanPostProcessor() {
         beanDefinitionMap.values().stream()
-                .filter(bd -> BeanPostProcessor.class.isAssignableFrom(bd.getBeanType()))
-                .map(this::createBean)
-                .map(BeanPostProcessor.class::cast)
-                .forEach(postProcessors::add);
+            .filter(bd -> BeanPostProcessor.class.isAssignableFrom(bd.getBeanType()))
+            .map(this::createBean)
+            .map(BeanPostProcessor.class::cast)
+            .forEach(postProcessors::add);
     }
 
-    protected boolean scanCreate(Class<?> type) {
+    protected boolean canCreate(Class<?> type) {
         return type.isAnnotationPresent(Component.class);
     }
 
@@ -152,20 +152,20 @@ public class ApplicationContext {
 
     public <T> T getBean(Class<T> beanType) {
         String beanName = this.beanDefinitionMap.values().stream()
-                .filter(bd -> beanType.isAssignableFrom(bd.getBeanType()))
-                .map(BeanDefinition::getName)
-                .findFirst()
-                .orElse(null);
+            .filter(bd -> beanType.isAssignableFrom(bd.getBeanType()))
+            .map(BeanDefinition::getName)
+            .findFirst()
+            .orElse(null);
         return (T) getBean(beanName);
     }
 
     public <T> List<T> getBeans(Class<T> beanType) {
         return this.beanDefinitionMap.values().stream()
-                .filter(bd -> beanType.isAssignableFrom(bd.getBeanType()))
-                .map(BeanDefinition::getName)
-                .map(this::getBean)
-                .map((bean) -> (T) bean)
-                .toList();
+            .filter(bd -> beanType.isAssignableFrom(bd.getBeanType()))
+            .map(BeanDefinition::getName)
+            .map(this::getBean)
+            .map((bean) -> (T) bean)
+            .toList();
     }
 
 }

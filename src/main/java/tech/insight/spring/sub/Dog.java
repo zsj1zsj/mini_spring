@@ -9,7 +9,7 @@ import tech.insight.spring.PostConstruct;
  **/
 @Component(name = "mydog")
 public class Dog {
-    
+
 
     @Autowired
     Cat cat;
