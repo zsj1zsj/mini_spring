@@ -25,13 +25,13 @@ public class ApplicationContext {
         initContext(packageName);
     }
 
-    private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 
-    private Map<String, Object> ioc = new HashMap<>();
+    private final Map<String, Object> ioc = new HashMap<>();
 
-    private Map<String, Object> loadingIoc = new HashMap<>();
+    private final Map<String, Object> loadingIoc = new HashMap<>();
 
-    private List<BeanPostProcessor> postProcessors = new ArrayList<>();
+    private final List<BeanPostProcessor> postProcessors = new ArrayList<>();
 
     public void initContext(String packageName) throws Exception {
         scanPackage(packageName).stream().filter(this::canCreate).forEach(this::wrapper);
@@ -114,7 +114,7 @@ public class ApplicationContext {
     private List<Class<?>> scanPackage(String packageName) throws Exception {
         List<Class<?>> classList = new ArrayList<>();
         URL resource = this.getClass().getClassLoader().getResource(packageName.replace(".", File.separator));
-        Path path = Path.of(resource.getFile());
+        Path path = Path.of(resource.toURI());
         Files.walkFileTree(path, new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
