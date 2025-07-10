@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import tech.insight.spring.BeanPostProcessor;
 import tech.insight.spring.Component;
+import tech.insight.spring.web.annotations.Controller;
+import tech.insight.spring.web.annotations.Param;
+import tech.insight.spring.web.annotations.RequestMapping;
 
 import java.io.IOException;
 import java.io.InputStream;

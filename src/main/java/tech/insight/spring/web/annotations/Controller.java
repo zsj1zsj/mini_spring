@@ -1,4 +1,4 @@
-package tech.insight.spring.web;
+package tech.insight.spring.web.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

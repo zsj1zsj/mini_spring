@@ -1,5 +1,7 @@
 package tech.insight.spring.web;
 
+import tech.insight.spring.web.annotations.ResponseBody;
+
 import java.lang.reflect.Method;
 
 /**
